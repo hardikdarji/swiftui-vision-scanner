@@ -19,20 +19,34 @@ struct ContentView: View {
         
         NavigationStack(path: $path) {
             VStack(spacing: 20) {
-                Text("Document Scanner")
-                Spacer()
-            }
-            .navigationTitle("Scan Document")
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    if scannedImages.count > 0  {
+                
+                Button {
+                    //Action
+                    path.append(AppRoute.scanning)
+
+                } label: {
+                    Text("Scan Document")
+                        .padding(12)
+                        .border(Color.blue, width: 1)
+                }
+                
+                if scannedImages.count > 0  {
+                    Button {
+                        //Action
                         path.append(AppRoute.preview)
-                    }
-                    else {
-                        path.append(AppRoute.scanning)
+
+                    } label: {
+                        Text("Preview Document")
+                            .padding(12)
+                            .border(Color.blue, width: 1)
                     }
                 }
+
+                
             }
+            .navigationTitle("Scan Document")
+            .toolbarTitleDisplayMode(.inline)
+            
             .navigationDestination(for: AppRoute.self) { route in
                 switch route {
                 case .preview:
